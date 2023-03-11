@@ -1,0 +1,7 @@
+{
+  "name": "fairshare_refactor",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
