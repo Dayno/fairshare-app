@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { DialogService } from 'src/app/services/dialog.service';
@@ -52,6 +51,7 @@ export class FsAuthLoginPage implements OnInit {
                 this.dialogService.showAlert('Login Fehlgeschlagen', data['error'].message);
               }
             })
+          this.credentials.reset();
         })
         .catch(async (error) => {
           await loading.dismiss();
@@ -65,6 +65,7 @@ export class FsAuthLoginPage implements OnInit {
           if (data['error']) {
             this.dialogService.showAlert('Login Fehlgeschlagen', data['error'].message);
           }
+          this.credentials.reset();
         })
     }
   }

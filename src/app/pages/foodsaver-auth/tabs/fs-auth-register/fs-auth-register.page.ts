@@ -71,6 +71,7 @@ export class FsAuthRegisterPage implements OnInit {
               + data['error'].message
             );
           }
+          this.registerCredentials.reset();
         });
     } else {
       await loading.dismiss();
