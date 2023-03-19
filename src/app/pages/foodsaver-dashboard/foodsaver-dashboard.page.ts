@@ -49,7 +49,7 @@ export class FoodsaverDashboardPage implements OnInit {
     if (result) {
       await this.authService.signOutUser().then(() => {
         this.formService.clearDeliveries();
-        this.router.navigateByUrl('/foodsaver');
+        this.router.navigateByUrl('point/foodsaver');
       });
     }
   }
