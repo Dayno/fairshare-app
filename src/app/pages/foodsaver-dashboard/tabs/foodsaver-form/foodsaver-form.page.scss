@@ -1,0 +1,38 @@
+ion-range::part(bar) {
+  height: 6px;
+  background: #f2f1f0;
+  transform: translateY(-50%);
+}
+
+ion-range::part(tick) {
+  height: 25px;
+  width: 5px;
+  background: #e5e5e3;
+  transform: translate(-50%, -50%);
+  border-radius: 4px;
+}
+
+ion-range::part(tick-active) {
+  height: 25px;
+  width: 5px;
+  background: #e5e5e3;
+  transform: translate(-50%, -50%);
+  border-radius: 4px;
+}
+
+ion-range::part(pin) {
+  display: none;
+}
+
+ion-range::part(pin)::before {
+  content: none;
+}
+
+ion-range::part(knob) {
+  --knob-size: 50px;
+  background: #99bb44;
+}
+
+ion-range::part(bar-active) {
+  background: transparent;
+}

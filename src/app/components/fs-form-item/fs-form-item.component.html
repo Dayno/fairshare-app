@@ -1,0 +1,15 @@
+<ion-card color="light">
+  <ion-card-content class="ion-activatable">
+    <ion-radio value="{{ item.id }}"></ion-radio>
+    <ion-ripple-effect></ion-ripple-effect>
+    <div
+      class="flex flex-col justify-content items-center"
+      [ngClass]="
+        item.icon_url ? 'text-secondary p-3' : 'text-tertiary text-lg  p-2'
+      "
+    >
+      <img *ngIf="item.icon_url" src="{{ item.icon_url }}" />
+      {{ item.title }}
+    </div>
+  </ion-card-content>
+</ion-card>

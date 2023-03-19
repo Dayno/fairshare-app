@@ -1,0 +1,27 @@
+ion-card {
+  margin: 0;
+  --border-radius: 8px;
+}
+
+// accordion ----
+ion-accordion-group {
+  width: 400px;
+  margin: 0;
+}
+
+#accordion-item {
+  padding: 0;
+  height: 50px;
+}
+
+#accordion-item::part(native) {
+  padding-right: 11px;
+  box-shadow: none;
+}
+
+// svg
+// svg {
+//   padding-right: 100px;
+//   display: flex !important;
+//   justify-content: center;
+// }

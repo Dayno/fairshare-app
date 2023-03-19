@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      <img src="../../../assets/logo.svg" alt="logo" class="h-8"
+    /></ion-title>
+    <ion-buttons slot="end" *ngIf="showLoginOption" (click)="pointSwitch()">
+      <ion-button class="pr-8">
+        <ion-icon name="lock-closed"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf="showLogoutOption" (click)="pointLogout()">
+      <ion-button class="pr-8">
+        <ion-icon name="lock-closed"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

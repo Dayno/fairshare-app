@@ -1,0 +1,73 @@
+<app-header></app-header>
+
+<ion-content color="primary" class="font-fira-sans">
+  <div class="container mx-auto h-full flex">
+    <ion-card class="bg-light w-full">
+      <ion-card-content>
+        <div class="flex flex-col h-full">
+          <div class="flex-1">
+            <div
+              class="grid grid-cols-12 font-medium text-medium border-b-2 border-fill px-[16px] py-2"
+            >
+              <div class="col-span-3">Lebensmittel</div>
+              <div class="col-span-3">Menge</div>
+              <div class="col-span-3">Genießbar</div>
+              <div class="col-span-2">Herkunft</div>
+              <div class="col-span-1"></div>
+            </div>
+            <div class="flex flex-col">
+              <ng-container
+                *ngFor="let item of deliveryItems; let index = index"
+              >
+                <app-food-entry [item]="item"></app-food-entry>
+              </ng-container>
+            </div>
+            <h1
+              *ngIf="deliveryItems.length === 0"
+              class="pt-6 w-full text-center"
+            >
+              Bitte trage deine Lebensmittel einzeln ein
+            </h1>
+            <div class="mt-8 w-full flex justify-center">
+              <ion-fab>
+                <ion-fab-button routerLink="/point/foodsaver/dashboard/form">
+                  <ion-icon name="add"></ion-icon>
+                </ion-fab-button>
+              </ion-fab>
+            </div>
+          </div>
+          <!-- Action Bar ---- -->
+          <div class="flex w-full justify-between">
+            <a
+              class="flex text-medium text-base items-center justify-center gap-2 cursor-pointer"
+              (click)="openInfoModal()"
+            >
+              <ion-icon
+                color="secondary"
+                name="help-circle"
+                class="h-10 w-10"
+              ></ion-icon>
+              Wichtige Informationen
+            </a>
+            <div class="flex gap-2">
+              <ion-button
+                (click)="cancelDelivery()"
+                class="w-[200px] h-[48px] text-base font-semibold"
+                color="light"
+              >
+                Abbrechen
+              </ion-button>
+              <ion-button
+                color="secondary"
+                class="w-[200px] h-[48px] text-base font-semibold"
+                (click)="submitDelivery()"
+              >
+                Abschließen
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

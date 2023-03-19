@@ -1,0 +1,42 @@
+<app-header></app-header>
+
+<ion-content color="primary" class="font-fira-sans">
+  <img
+    src="../../../assets/background.svg"
+    alt="background"
+    class="absolute h-full w-full p-4"
+  />
+  <div
+    class="flex flex-col gap-4 h-full container mx-auto justify-center items-center"
+  >
+    <ion-card class="bg-light p-2">
+      <ion-card-header class="flex">
+        <ion-icon
+          color="secondary"
+          name="checkmark-circle"
+          size="large"
+        ></ion-icon>
+        <ion-title class="text-3xl text-tertiary uppercase">
+          Danke für deine Spende!
+        </ion-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="font-base text-lg">
+          <span class="text-tertiary font-bold">Bitte vergiss nicht</span>
+          <br />
+          ... die Oberflächen abzuwischen, <br />
+          ... das Licht auszumachen, <br />
+          ... die Türe zu schließen, <br />
+          ... dich an der Theke zuverabschieden.
+        </div>
+        <ion-button
+          (click)="finish()"
+          class="flex w-1/2 mx-auto mt-8"
+          color="secondary"
+        >
+          Alles klar
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

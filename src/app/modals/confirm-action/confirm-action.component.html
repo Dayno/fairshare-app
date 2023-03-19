@@ -1,0 +1,27 @@
+<ion-card class="bg-light p-2">
+  <ion-card-header>
+    <div class="flex">
+      <ion-icon color="medium" name="alert-circle" size="large"></ion-icon>
+      <ion-title class="text-2xl text-tertiary">
+        Bist du dir sicher?
+      </ion-title>
+    </div>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-text>
+      {{ message }}
+    </ion-text>
+    <div class="flex gap-2 mt-4">
+      <ion-button class="w-1/2" color="light" expand="block" (click)="cancel()"
+        >Abbrechen</ion-button
+      >
+      <ion-button
+        class="w-1/2"
+        color="secondary"
+        expand="block"
+        (click)="confirm()"
+        >Weiter</ion-button
+      >
+    </div>
+  </ion-card-content>
+</ion-card>

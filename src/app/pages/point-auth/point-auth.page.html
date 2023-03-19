@@ -1,0 +1,58 @@
+<app-header></app-header>
+
+<ion-content color="primary" class="font-fira-sans">
+  <img
+    src="../../../assets/background.svg"
+    alt="background"
+    class="absolute h-full w-full p-4"
+  />
+
+  <div
+    class="flex flex-col gap-4 h-full container mx-auto justify-center items-center"
+  >
+    <h1 class="font-londrina text-6xl font-medium text-light z-10">
+      FAIRSHARE POINT
+    </h1>
+    <ion-card class="bg-light p-2 w-1/2">
+      <ion-card-content>
+        <form [formGroup]="credentials">
+          <div class="flex flex-col gap-2">
+            <label class="font-medium text-medium">Point ID</label>
+            <input
+              formControlName="pointId"
+              type="password"
+              inputmode="number"
+              min="0"
+              minlength="6"
+              placeholder="Point ID"
+              [ngClass]="(pointId?.dirty || pointId?.touched) && pointId?.invalid ? 'ring-2 ring-danger focus:ring-danger' : 'ring-0 focus:ring-primary'"
+            />
+            <span
+              *ngIf="(pointId?.dirty || pointId?.touched) && pointId?.invalid"
+              class="text-danger text-xs"
+              >Point ID ungültig</span
+            >
+            <div class="flex sm:flex-row flex-col">
+              <ion-button
+                color="secondary"
+                [disabled]="credentials.invalid"
+                (click)="flogin()"
+                class="sm:w-1/2"
+              >
+                Foodsaver Login
+              </ion-button>
+              <ion-button
+                color="secondary"
+                [disabled]="credentials.invalid"
+                (click)="mlogin()"
+                class="sm:w-1/2"
+              >
+                Mitarbeiter Übersicht
+              </ion-button>
+            </div>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

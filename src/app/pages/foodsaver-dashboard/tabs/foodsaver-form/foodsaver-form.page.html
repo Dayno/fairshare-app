@@ -1,0 +1,207 @@
+<app-header></app-header>
+
+<ion-content color="primary">
+  <div class="container mx-auto h-full flex justify-center">
+    <ion-card class="bg-light rounded-lg">
+      <ion-card-content class="h-full">
+        <form
+          class="flex flex-col gap-2 h-full items-center"
+          (ngSubmit)="onSubmit()"
+          [formGroup]="formData"
+        >
+          <div
+            class="flex-1 flex gap-8 flex-col lg:flex-row h-full p-2 overflow-y-auto"
+          >
+            <!-- ----- -->
+            <div class="flex flex-col gap-4">
+              <!-- first row -->
+              <div class="flex gap-2">
+                <div class="w-full flex flex-col gap-2">
+                  <label class="font-medium text-medium">Lebensmittel</label>
+                  <input
+                    formControlName="title"
+                    type="text"
+                    inputmode="text"
+                    class="text-tertiary bg-fill rounded-md border-0 focus:outline-none focus:border-0 focus:ring-2"
+                    [ngClass]="
+                    title?.touched && title?.dirty && title?.invalid
+                      ? 'ring-2 ring-danger focus:ring-danger'
+                      : 'ring-0 focus:ring-secondary'
+                  "
+                  />
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label class="font-medium text-light">Kühlcheck</label>
+                  <div class="flex items-center gap-2 font-medium text-medium">
+                    <ion-checkbox
+                      formControlName="cool"
+                      class="h-8 w-8"
+                    ></ion-checkbox>
+                    In den <br />Kühlschrank?
+                  </div>
+                </div>
+              </div>
+              <!-- second row -->
+              <div class="flex flex-col gap-2">
+                <label class="font-medium text-medium">Kategorien</label>
+                <ion-radio-group formControlName="category_id">
+                  <div class="grid grid-cols-3 gap-2">
+                    <ng-container *ngFor="let category of categorys">
+                      <app-fs-form-item
+                        class="relative"
+                        [item]="category"
+                      ></app-fs-form-item>
+                    </ng-container>
+                  </div>
+                </ion-radio-group>
+              </div>
+            </div>
+            <!-- ----- -->
+
+            <div class="flex flex-col gap-4">
+              <!-- first row -->
+              <div class="flex flex-col gap-2">
+                <label class="font-medium text-medium">Wo gerettet?</label>
+                <ion-radio-group formControlName="origin_category_id">
+                  <div class="grid grid-cols-3 gap-2">
+                    <ng-container *ngFor="let origin of origins">
+                      <app-fs-form-item
+                        class="relative"
+                        [item]="origin"
+                      ></app-fs-form-item>
+                    </ng-container>
+                  </div>
+                </ion-radio-group>
+              </div>
+              <!-- second row -->
+              <div class="flex gap-2">
+                <div class="w-full flex flex-col gap-2">
+                  <label class="font-medium text-medium">Menge (in kg)</label>
+                  <input
+                    formControlName="quantity"
+                    type="number"
+                    inputmode="number"
+                    min="0"
+                    step="0.1"
+                    class="text-tertiary bg-fill rounded-md border-0 focus:outline-none focus:border-0 focus:ring-2"
+                    [ngClass]="
+                    quantity?.touched && quantity?.dirty && quantity?.invalid
+                      ? 'ring-2 ring-danger focus:ring-danger'
+                      : 'ring-0 focus:ring-secondary'
+                  "
+                  />
+                </div>
+                <div class="w-full flex flex-col gap-2">
+                  <label class="font-medium text-medium"
+                    >Betriebsname (optional)</label
+                  >
+                  <input
+                    formControlName="origin"
+                    type="text"
+                    inputmode="text"
+                    class="text-tertiary bg-fill rounded-md border-0 focus:outline-none focus:border-0 focus:ring-2"
+                    [ngClass]="
+                    origin?.touched && origin?.dirty && origin?.invalid
+                      ? 'ring-2 ring-danger focus:ring-danger'
+                      : 'ring-0 focus:ring-secondary'
+                  "
+                  />
+                </div>
+              </div>
+              <!-- third row -->
+              <div class="flex flex-col gap-1">
+                <label class="font-medium text-medium"
+                  >Wie lange genießbar?</label
+                >
+                <ion-range
+                  formControlName="shelf_life"
+                  id="input"
+                  class="px-[28px] py-0"
+                  [min]="0"
+                  [max]="7"
+                  [pin]="true"
+                  [ticks]="true"
+                  [snaps]="true"
+                  color="secondary"
+                  (ionChange)="onRangeChange($event)"
+                ></ion-range>
+                <div class="grid grid-cols-8 gap-2 text-center">
+                  <ng-container *ngFor="let step of steps; let i = index">
+                    <div
+                      class="font-medium text-xs"
+                      [id]="i"
+                      [style.color]="stepColor(i)"
+                    >
+                      {{ step }}
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+              <!-- fourth row -->
+              <div class="w-full flex flex-col gap-2">
+                <label class="font-medium text-medium"
+                  >Allergene & Inhaltsstoffe (optional)</label
+                >
+                <input
+                  formControlName="allergens"
+                  type="text"
+                  inputmode="text"
+                  class="text-tertiary bg-fill rounded-md border-0 focus:outline-none focus:border-0 focus:ring-2"
+                  [ngClass]="
+                  allergens?.touched && allergens?.dirty && allergens?.invalid
+                    ? 'ring-2 ring-danger focus:ring-danger'
+                    : 'ring-0 focus:ring-secondary'
+                "
+                />
+              </div>
+              <!-- fifth row -->
+              <div class="w-full flex flex-col gap-2">
+                <label class="font-medium text-medium"
+                  >Anmerkungen (optional)</label
+                >
+                <input
+                  formControlName="comment"
+                  type="text"
+                  inputmode="text"
+                  class="text-tertiary bg-fill rounded-md border-0 focus:outline-none focus:border-0 focus:ring-2"
+                  [ngClass]="
+                  comment?.touched && comment?.dirty && comment?.invalid
+                    ? 'ring-2 ring-danger focus:ring-danger'
+                    : 'ring-0 focus:ring-secondary'
+                "
+                />
+              </div>
+            </div>
+          </div>
+          <div class="flex gap-2 w-full justify-end">
+            <ion-button
+              (click)="cancelSubmission()"
+              color="light"
+              class="w-[200px] h-[48px] text-base font-semibold"
+            >
+              Abbrechen
+            </ion-button>
+            <ion-button
+              *ngIf="!edit"
+              color="secondary"
+              class="w-[200px] h-[48px] text-base font-semibold"
+              type="submit"
+              [disabled]="formData.invalid"
+            >
+              Hinzufügen
+            </ion-button>
+            <ion-button
+              *ngIf="edit"
+              color="secondary"
+              class="w-[200px] h-[48px] text-base font-semibold"
+              (click)="update()"
+              [disabled]="formData.invalid"
+            >
+              Speichern
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

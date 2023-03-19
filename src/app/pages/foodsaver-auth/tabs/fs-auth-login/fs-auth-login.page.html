@@ -1,0 +1,86 @@
+<ion-content color="primary" class="font-fira-sans">
+  <img
+    src="../../../assets/background.svg"
+    alt="background"
+    class="absolute h-full w-full p-4"
+  />
+  <div
+    class="flex flex-col gap-2 h-full container mx-auto justify-center items-center"
+  >
+    <h1 class="font-londrina text-6xl font-medium text-light">ANMELDEN</h1>
+    <h4 class="font-medium text-light">
+      Bitte wähle eine der folgenden Optionen aus, um dich anzumelden
+    </h4>
+    <div class="flex max-w-5xl">
+      <ion-card class="bg-light p-2 w-1/2">
+        <ion-card-content
+          class="h-full flex flex-col gap-2 items-center justify-center font-medium"
+        >
+          <ion-card-title class="text-tertiary font-medium text-xl">
+            Wähle eine Option aus
+          </ion-card-title>
+          <form (ngSubmit)="login()" [formGroup]="credentials" class="w-full">
+            <div class="flex flex-col gap-2">
+              <label class="font-medium text-medium">E-Mail</label>
+              <input
+                formControlName="email"
+                type="email"
+                inputmode="email"
+                [ngClass]="(email?.dirty || email?.touched) && email?.invalid ? 'ring-2 ring-danger focus:ring-danger' : 'ring-0 focus:ring-secondary'"
+                email
+              />
+              <span
+                *ngIf="(email?.dirty || email?.touched) && email?.invalid"
+                class="text-danger text-xs"
+                >Email-Adresse ist ungültig</span
+              >
+              <span class="mx-auto">Oder</span>
+              <label class="font-medium text-medium">Telefonnummer</label>
+              <input
+                formControlName="tel"
+                type="number"
+                inputmode="tel"
+                min="0"
+                [ngClass]="(tel?.dirty || tel?.touched) && tel?.invalid ? 'ring-2 ring-danger focus:ring-danger' : 'ring-0 focus:ring-secondary'"
+              />
+              <span
+                *ngIf="(tel?.dirty || tel?.touched) && tel?.invalid"
+                class="text-danger text-xs"
+              >
+                Telefonnummer ist ungültig
+              </span>
+              <ion-button
+                type="submit"
+                [disabled]="credentials.invalid"
+                class="flex w-1/2 mx-auto"
+                color="secondary"
+              >
+                <ion-icon
+                  slot="start"
+                  size="small"
+                  name="lock-closed"
+                  color="light"
+                ></ion-icon>
+                Anmelden
+              </ion-button>
+            </div>
+          </form>
+        </ion-card-content>
+      </ion-card>
+      <ion-card class="bg-light p-2 w-1/2 text-center">
+        <ion-card-content
+          class="h-full flex flex-col gap-4 items-center justify-center"
+        >
+          <ion-card-title class="text-tertiary font-medium text-2xl">
+            Zum ersten mal hier?
+          </ion-card-title>
+          Keine Sorge, du kannst auch ohne Account Lebensmittel retten. Fülle
+          dafür bitte im nächsten Schritt das Retteformular aus.
+          <a routerLink="/point/foodsaver/auth/register">
+            <img src="../../../assets/icons/chevron_forward.svg" alt="weiter" />
+          </a>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

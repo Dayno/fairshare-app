@@ -1,0 +1,115 @@
+<ion-content color="primary" class="font-fira-sans">
+  <img
+    src="../../../assets/background.svg"
+    alt="background"
+    class="absolute h-full w-full p-4"
+  />
+  <div
+    class="flex flex-col gap-4 h-full container mx-auto justify-center items-center"
+  >
+    <h1 class="font-londrina text-6xl font-medium text-light">ANMELDEN</h1>
+    <div class="max-w-5xl">
+      <ion-card class="bg-light p-2">
+        <ion-card-content>
+          <form (ngSubmit)="register()" [formGroup]="registerCredentials">
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex flex-col gap-2">
+                <label class="font-medium text-medium">Vorname</label>
+                <input
+                  formControlName="first_name"
+                  minlength="2"
+                  type="text"
+                  inputmode="text"
+                  [ngClass]="(first_name?.touched && first_name?.dirty) && first_name?.invalid ? 'ring-2 ring-danger focus:ring-danger' : 'ring-0 focus:ring-secondary'"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="font-medium text-medium">Nachname</label>
+                <input
+                  formControlName="last_name"
+                  minlength="2"
+                  type="text"
+                  inputmode="text"
+                  [ngClass]="(last_name?.touched && last_name?.dirty) && last_name?.invalid ? 'ring-2 ring-danger focus:ring-danger' : 'ring-0 focus:ring-secondary'"
+                />
+              </div>
+              <div class="col-span-2 flex flex-col gap-2 w-full">
+                <label class="font-medium text-medium">Email</label>
+                <input
+                  formControlName="email"
+                  type="email"
+                  inputmode="email"
+                  email
+                  [ngClass]="(email?.touched && email?.dirty) && email?.invalid ? 'ring-2 ring-danger focus:ring-danger' : 'ring-0 focus:ring-secondary'"
+                />
+                <span
+                  *ngIf="email?.dirty && email?.invalid"
+                  class="text-danger text-xs"
+                  >Email ungültig</span
+                >
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="font-medium text-medium"
+                  >Telefonnummer (optional)</label
+                >
+                <input
+                  formControlName="tel"
+                  type="number"
+                  inputmode="number"
+                  [ngClass]="(tel?.touched && tel?.dirty) && tel?.invalid ? 'ring-2 ring-danger focus:ring-danger' : 'ring-0 focus:ring-secondary'"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="font-medium text-medium"
+                  >Foodsaver ID (optional)</label
+                >
+                <input
+                  formControlName="foodsharing_id"
+                  type="number"
+                  inputmode="number"
+                  [ngClass]="(foodsharing_id?.touched && foodsharing_id?.dirty) && foodsharing_id?.invalid ? 'ring-2 ring-danger focus:ring-danger' : 'ring-0 focus:ring-secondary'"
+                />
+              </div>
+              <ion-item class="bg-light col-span-2" color="light">
+                <ion-checkbox
+                  formControlName="privacyCheck"
+                  class="h-8 w-14 mr-4"
+                ></ion-checkbox>
+                <ion-text color="medium">
+                  <h3>
+                    Mit der Registrierung stimme ich zu, dass meine Daten zur
+                    Auswertung einer Wirkungsmessung verwendet werden dürfen.
+                    Persönliche Daten werden bei der Wirkungsmessung nicht
+                    berücksichtigt und auch nicht an Dritte weitergegeben.
+                  </h3>
+                </ion-text>
+              </ion-item>
+            </div>
+            <div
+              class="w-full flex flex-col text-center mt-4 justify-center items-center gap-4"
+            >
+              <ion-text color="tertiary" class="text-md font-medium">
+                Das nächste Mal kannst du dich mit deiner angegebenen E-Mail
+                Adresse oder Telefonnummer anmelden.
+              </ion-text>
+              <ion-button
+                class="w-1/4"
+                type="submit"
+                color="secondary"
+                [disabled]="registerCredentials.invalid"
+              >
+                <ion-icon
+                  slot="start"
+                  size="small"
+                  name="lock-closed"
+                  color="light"
+                ></ion-icon>
+                Registrieren
+              </ion-button>
+            </div>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>
