@@ -11,11 +11,6 @@ export class FoodsaverAuthPage implements OnInit {
 
   constructor(private authService: AuthService, private router: Router) {
     this.authService.empSignOut();
-    this.authService.getCurrentUser().subscribe((user) => {
-      if (user) {
-        this.router.navigateByUrl('point/foodsaver/dashboard');
-      }
-    });
   }
 
   ngOnInit() {

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { FoodEntry } from 'src/app/models/food-entry.interface';
 import { ShelfLifeDates } from 'src/app/models/shelf-life';
 import { FormItem } from 'src/app/services/data.service';
@@ -30,7 +30,8 @@ export class FoodEntryInfoComponent implements OnInit {
     private formService: FormService,
     private warehouseService: WarehouseService,
     private modalController: ModalController,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
@@ -61,15 +62,19 @@ export class FoodEntryInfoComponent implements OnInit {
     this.dialogService.confirm('Möchtest du wirklich ' + this.formData.getRawValue().quantity + ' kg des Lebensmittel ' + this.item.title + ' fairteilen?')
       .then(async (result) => {
         if (result) {
+          const loading = await this.loadingController.create();
+          await loading.present();
           try {
-            const result = await this.warehouseService.checkoutData(this.item, 1, this.formData.getRawValue().quantity);
-            if (!result.message) {
-              this.dialogService.presentToast('Checkout erfolgreich');
-            } else {
-              this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + result.message);
-            }
+            await this.warehouseService.checkoutData(this.item, 1, this.formData.getRawValue().quantity).then(async (result) => {
+              await loading.dismiss()
+              if (!result.message) {
+                this.dialogService.presentToast('Checkout erfolgreich');
+              } else {
+                this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + result.error);
+              }
+            })
           } catch (error) {
-            this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + error + '');
+            this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + error);
           }
         }
       });
@@ -80,13 +85,17 @@ export class FoodEntryInfoComponent implements OnInit {
     this.dialogService.confirm('Möchtest du wirklich ' + this.formData.getRawValue().quantity + ' kg des Lebensmittel ' + this.item.title + ' entsorgen?')
       .then(async (result) => {
         if (result) {
+          const loading = await this.loadingController.create();
+          await loading.present();
           try {
-            const result = await this.warehouseService.checkoutData(this.item, 2, this.formData.getRawValue().quantity);
-            if (!result.message) {
-              this.dialogService.presentToast('Checkout erfolgreich');
-            } else {
-              this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + result.message);
-            }
+            await this.warehouseService.checkoutData(this.item, 2, this.formData.getRawValue().quantity).then(async (result) => {
+              await loading.dismiss()
+              if (!result.message) {
+                this.dialogService.presentToast('Checkout erfolgreich');
+              } else {
+                this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + result.error);
+              }
+            })
           } catch (error) {
             this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + error);
           }

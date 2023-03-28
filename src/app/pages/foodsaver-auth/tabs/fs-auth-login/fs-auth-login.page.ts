@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { DialogService } from 'src/app/services/dialog.service';
@@ -21,6 +22,7 @@ export class FsAuthLoginPage implements OnInit {
     private authService: AuthService,
     private loadingController: LoadingController,
     private dialogService: DialogService,
+    private router: Router
   ) { }
 
   get email() {
@@ -47,6 +49,7 @@ export class FsAuthLoginPage implements OnInit {
             .signInUser({ email: email, password: this.credentials.getRawValue().password })
             .then(async (data) => {
               await loading.dismiss();
+              this.router.navigateByUrl('point/foodsaver/dashboard');
               if (data['error']) {
                 this.dialogService.showAlert('Login Fehlgeschlagen', data['error'].message);
               }
@@ -62,6 +65,7 @@ export class FsAuthLoginPage implements OnInit {
         .signInUser(this.credentials.getRawValue())
         .then(async (data) => {
           await loading.dismiss();
+          this.router.navigateByUrl('point/foodsaver/dashboard');
           if (data['error']) {
             this.dialogService.showAlert('Login Fehlgeschlagen', data['error'].message);
           }

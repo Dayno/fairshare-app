@@ -40,6 +40,7 @@ export class EmployeeDashboardMainPage implements OnInit {
             return new Date(a.shelf_life).getTime() - new Date(b.shelf_life).getTime();
           });
         } else {
+          this.warehouseData = [];
           this.dialogService.presentToast('Keine Daten gefunden');
         }
       });

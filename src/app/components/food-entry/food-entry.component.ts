@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { FoodEntry } from 'src/app/models/food-entry.interface';
 import { ShelfLifeString } from 'src/app/models/shelf-life';
 import { DataService, FormItem } from 'src/app/services/data.service';
@@ -23,10 +23,10 @@ export class FoodEntryComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private toastController: ToastController,
     private dialogService: DialogService,
     private formService: FormService,
-    private warehouseService: WarehouseService
+    private warehouseService: WarehouseService,
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
@@ -60,26 +60,34 @@ export class FoodEntryComponent implements OnInit {
   }
 
   async distributeEntry(): Promise<void> {
+    const loading = await this.loadingController.create();
+    await loading.present();
     try {
-      const result = await this.warehouseService.checkoutData(this.item, 1, this.item.quantity);
-      if (!result.message) {
-        this.dialogService.presentToast('Checkout erfolgreich');
-      } else {
-        this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + result.error);
-      }
+      await this.warehouseService.checkoutData(this.item, 1, this.item.quantity).then(async (result) => {
+        await loading.dismiss()
+        if (!result.message) {
+          this.dialogService.presentToast('Checkout erfolgreich');
+        } else {
+          this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + result.error);
+        }
+      })
     } catch (error) {
       this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + error);
     }
   }
 
   async disposeEntry(): Promise<void> {
+    const loading = await this.loadingController.create();
+    await loading.present();
     try {
-      const result = await this.warehouseService.checkoutData(this.item, 2, this.item.quantity);
-      if (!result.message) {
-        this.dialogService.presentToast('Checkout erfolgreich');
-      } else {
-        this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + result.error);
-      }
+      await this.warehouseService.checkoutData(this.item, 2, this.item.quantity).then(async (result) => {
+        await loading.dismiss()
+        if (!result.message) {
+          this.dialogService.presentToast('Checkout erfolgreich');
+        } else {
+          this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + result.error);
+        }
+      })
     } catch (error) {
       this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + error);
     }

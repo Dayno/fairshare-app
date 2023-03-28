@@ -25,6 +25,7 @@ export class FsAuthRegisterPage implements OnInit {
     private authService: AuthService,
     private loadingController: LoadingController,
     private dialogService: DialogService,
+    private router: Router
   ) { }
 
   get first_name() {
@@ -64,6 +65,7 @@ export class FsAuthRegisterPage implements OnInit {
       this.authService.registerUser(this.registerCredentials.getRawValue())
         .then(async (data) => {
           await loading.dismiss();
+          this.router.navigateByUrl('point/foodsaver/dashboard');
           if (data['error']) {
             this.dialogService.showAlert(
               'Registrierung Fehlgeschlagen',
