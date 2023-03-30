@@ -41,7 +41,6 @@ export class FoodsaverFormPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private navCtrl: NavController,
     private fb: FormBuilder,
     private dataService: DataService,
     private formService: FormService,
@@ -160,7 +159,7 @@ export class FoodsaverFormPage implements OnInit {
   async cancelSubmission(): Promise<void> {
     const result = await this.dialogService.confirm('Bist du sicher, dass du zurück zur Übersicht möchtest?');
     if (result) {
-      this.navCtrl.pop();
+      this.router.navigate(['point/foodsaver/dashboard']);
     }
   }
 
