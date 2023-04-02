@@ -13,12 +13,17 @@
             >
               <div class="col-span-3">Lebensmittel</div>
               <div class="col-span-3">Menge</div>
-              <div class="col-span-3">Genießbar bis</div>
-              <div class="col-span-2">Herkunft</div>
+              <div class="col-span-3">Datum</div>
+              <div class="col-span-2">Status</div>
               <div class="col-span-1"></div>
             </div>
-            <div class="flex justify-center align-center mt-8">
-              <ion-card-title>Noch in Arbeit...</ion-card-title>
+            <div class="flex flex-col">
+              <div class="my-4 text-center" *ngIf="historyData.length <= 0">
+                Keine Einträge vorhanden...
+              </div>
+              <ng-container *ngFor="let item of historyData">
+                <app-history-entry [item]="item"></app-history-entry>
+              </ng-container>
             </div>
           </div>
         </div>

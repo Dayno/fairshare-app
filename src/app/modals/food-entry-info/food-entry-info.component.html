@@ -1,4 +1,4 @@
-<ion-card color="light p-2">
+<ion-card color="light">
   <ion-card-content>
     <ion-toolbar color="light">
       <ion-card-title>
@@ -13,7 +13,9 @@
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
-    <ion-accordion-group expand="inset" *ngIf="item?.created_at">
+
+    <!-- Warehouse accordion -->
+    <ion-accordion-group expand="inset" *ngIf="item?.first_name">
       <ion-accordion value="first" class="bg-light shadow-none text-tertiary">
         <ion-item id="accordion-item" slot="header" color="light">
           <ion-label class="px-2">Informationen</ion-label>
@@ -49,33 +51,41 @@
             {{ item ? (item.comment ? item.comment : "-") : "" }}
           </div>
           <div
-            class="col-span-8 border-t-2 border-medium border-opacity-25 w-full"
+            [ngClass]="
+              item.first_name
+                ? 'col-span-8 border-t-2 border-medium border-opacity-25 w-full'
+                : ''
+            "
           ></div>
-          <div class="col-span-3 text-medium font-base">Geliefert von:</div>
-          <div class="col-span-5">
-            {{
-              item
-                ? item.first_name && item.last_name
-                  ? item.first_name + " " + item.last_name
-                  : "-"
-                : ""
-            }}
-          </div>
-          <div class="col-span-3 text-medium font-base">Email:</div>
-          <div class="col-span-5">
-            {{ item ? (item.email ? item.email : "-") : "" }}
-          </div>
-          <div class="col-span-3 text-medium font-base">Telefonnummer:</div>
-          <div class="col-span-5">
-            {{ item ? (item.tel ? item.tel : "-") : "" }}
-          </div>
+          <ng-container *ngIf="item.first_name">
+            <div class="col-span-3 text-medium font-base">Geliefert von:</div>
+            <div class="col-span-5">
+              {{
+                item
+                  ? item.first_name && item.last_name
+                    ? item.first_name + " " + item.last_name
+                    : "-"
+                  : ""
+              }}
+            </div>
+            <div class="col-span-3 text-medium font-base">Email:</div>
+            <div class="col-span-5">
+              {{ item ? (item.email ? item.email : "-") : "" }}
+            </div>
+            <div class="col-span-3 text-medium font-base">Telefonnummer:</div>
+            <div class="col-span-5 pb-2">
+              {{ item ? (item.tel ? item.tel : "-") : "" }}
+            </div>
+          </ng-container>
         </div>
       </ion-accordion>
     </ion-accordion-group>
+
+    <!-- Foodsaver form -->
     <div
       class="w-full grid grid-cols-8 gap-2 px-4 mt-2 text-tertiary"
       slot="content"
-      *ngIf="!item?.created_at"
+      *ngIf="!item?.first_name"
     >
       <div class="col-span-3 text-medium font-base">Kühlen:</div>
       <div class="col-span-5">{{ item.cool ? "Ja" : "Nein" }}</div>
@@ -116,17 +126,17 @@
         Bearbeiten
       </ion-button>
     </div>
-    <form [formGroup]="formData">
+
+    <!-- Warehouse form -->
+    <form [formGroup]="formData" *ngIf="!item?.status_id && item.created_at">
       <div
         class="flex flex-col w-full h-full pt-4 gap-4 text-center border-t-2 border-medium border-opacity-50"
-        *ngIf="item?.created_at"
       >
         <div class="flex flex-col gap-2">
           <label class="font-medium text-medium">Menge (in kg)</label>
           <div
             class="flex gap-2 font-medium text-lg justify-center items-center text-tertiary"
           >
-            <!-- class="w-1/3 text-tertiary bg-fill rounded-md border-0 focus:outline-none focus:border-0 focus:ring-2" -->
             <input
               formControlName="quantity"
               type="number"

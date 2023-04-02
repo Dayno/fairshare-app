@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+import { Comment } from 'src/app/modals/comment-form/comment-form.component';
 import { FoodEntry } from 'src/app/models/food-entry.interface';
 import { ShelfLifeString } from 'src/app/models/shelf-life';
 import { DataService, FormItem } from 'src/app/services/data.service';
@@ -21,16 +23,25 @@ export class FoodEntryComponent implements OnInit {
   shelfLifeCheck = false;
   quantity!: FoodEntry['quantity'];
 
+  comments: Comment[] = [];
+
   constructor(
     private dataService: DataService,
     private dialogService: DialogService,
     private formService: FormService,
     private warehouseService: WarehouseService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.checkData();
+    if (!this.router.url.includes('foodsaver')) {
+      this.loadComments();
+      this.warehouseService.listenCommentsChannel().subscribe((data) => {
+        this.loadComments();
+      })
+    }
   }
 
   async checkData(): Promise<void> {
@@ -45,9 +56,24 @@ export class FoodEntryComponent implements OnInit {
     }
   }
 
+  loadComments(): void {
+    this.warehouseService.getComments(this.item?.id)
+      .then((data) => {
+        this.comments = data
+      })
+      .catch((error) => {
+        this.dialogService.showAlert('Ein Fehler ist aufgetreten', error)
+      })
+  }
+
   // modal functionality --
-  async setOpen(): Promise<void> {
+  async openFoodEntryInfo(): Promise<void> {
     this.dialogService.presentFoodEntryInfoModal(this.item, this.category, this.origin);
+  }
+
+  async openCommentForm(): Promise<void> {
+    await this.dialogService.presentCommentForm(this.comments, this.item.id);
+    this.loadComments();
   }
 
   // Food Entry CRUD --

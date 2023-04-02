@@ -1,6 +1,6 @@
 <div class="border-b-2 border-fill pt-2">
   <ion-item-sliding>
-    <ion-item lines="none" (click)="setOpen()">
+    <ion-item lines="none" (click)="openFoodEntryInfo()">
       <div
         class="w-full grid grid-cols-12 text-lg text-tertiary font-medium py-3 px-[8px] justify-center items-center ion-activatable"
       >
@@ -29,9 +29,22 @@
           />
         </div>
         <div class="col-span-2">{{ origin ? origin.title : "" }}</div>
-        <div class="col-span-1 flex justify-end">
-          <img src="../../../assets/icons/icon_options.svg" class="h-10 w-10" />
-        </div>
+        <ng-container *ngIf="comments.length <= 0; else commentButton">
+          <div class="col-span-1 flex justify-end">
+            <img
+              src="../../../assets/icons/icon_options.svg"
+              class="h-10 w-10"
+            />
+          </div>
+        </ng-container>
+        <ng-template #commentButton>
+          <div class="col-span-1 flex justify-end">
+            <img
+              src="../../../assets/icons/icon_comment.svg"
+              class="h-10 w-10 shadow-md rounded-md"
+            />
+          </div>
+        </ng-template>
         <ion-ripple-effect></ion-ripple-effect>
       </div>
     </ion-item>
@@ -58,14 +71,14 @@
       </ion-item-options>
     </div>
     <div *ngIf="item?.created_at">
-      <ion-item-options side="start" (ionSwipe)="disposeEntry()">
+      <ion-item-options side="start" (ionSwipe)="openCommentForm()">
         <ion-item-option
           class="rounded-l-lg text-light"
-          color="danger"
+          color="warning"
           expandable
-          (click)="disposeEntry()"
+          (click)="openCommentForm()"
         >
-          Entsorgen
+          Kommentieren
         </ion-item-option>
       </ion-item-options>
       <ion-item-options side="end" (ionSwipe)="distributeEntry()">

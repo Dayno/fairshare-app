@@ -21,9 +21,10 @@
               <div class="col-span-1"></div>
             </div>
             <div class="flex flex-col">
-              <ng-container
-                *ngFor="let item of warehouseData; let index = index"
-              >
+              <div class="my-4 text-center" *ngIf="warehouseData.length <= 0">
+                Keine Einträge vorhanden...
+              </div>
+              <ng-container *ngFor="let item of warehouseData">
                 <app-food-entry [item]="item"></app-food-entry>
               </ng-container>
             </div>

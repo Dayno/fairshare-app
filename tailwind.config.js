@@ -6,6 +6,7 @@ module.exports = {
       primary: "#446622",
       secondary: "#99BB44",
       tertiary: "#1E212B",
+      warning: "#FFC60A",
       danger: "#FB5F5F",
       medium: "#BEBEB9",
       fill: "#F2F1F0",

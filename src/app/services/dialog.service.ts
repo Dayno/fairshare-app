@@ -6,6 +6,8 @@ import { FsFormInfoComponent } from '../modals/fs-form-info/fs-form-info.compone
 import { PointAuthSwitchComponent } from '../modals/point-auth-switch/point-auth-switch.component';
 import { FoodEntry } from '../models/food-entry.interface';
 import { FormItem } from './data.service';
+import { CommentFormComponent } from '../modals/comment-form/comment-form.component';
+import { Comment } from '../modals/comment-form/comment-form.component';
 
 @Injectable({
   providedIn: 'root'
@@ -68,6 +70,20 @@ export class DialogService {
     await modal.onDidDismiss();
 
     return true;
+  }
+
+  // Comment Form Modal
+  async presentCommentForm(comments: Comment[], itemId: string): Promise<any> {
+    const modal = await this.modalController.create({
+      component: CommentFormComponent,
+      componentProps: { comments, itemId }
+    });
+    await modal.present();
+    const comment = await modal.onDidDismiss();
+    if (!comment) {
+      return null;
+    }
+    return comment;
   }
 
   // Point Switch Modal

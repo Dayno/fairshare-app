@@ -11,13 +11,13 @@ import { WarehouseService } from 'src/app/services/warehouse.service';
   styleUrls: ['./employee-dashboard-main.page.scss'],
 })
 export class EmployeeDashboardMainPage implements OnInit {
-  warehouseData!: FoodEntry[];
+  warehouseData: FoodEntry[] = [];
 
   constructor(
     private warehouseService: WarehouseService,
     private dialogService: DialogService,
   ) {
-    this.warehouseService.listenRealtimeChannel().subscribe((data) => {
+    this.warehouseService.listenWarehouseChannel().subscribe((data) => {
       this.getWarehouseData();
     })
   }
@@ -41,13 +41,13 @@ export class EmployeeDashboardMainPage implements OnInit {
           });
         } else {
           this.warehouseData = [];
-          this.dialogService.presentToast('Keine Daten gefunden');
         }
       });
     return this.warehouseData;
   }
 
   ngOnDestroy() {
-    this.warehouseService.unsubscribeRealtimeChannel();
+    this.warehouseService.unsubscribeWarehouseChannel();
+    this.warehouseService.unsubscribeCommentsChannel();
   }
 }

@@ -1,0 +1,63 @@
+<ion-card color="light" id="container">
+  <ion-card-content>
+    <ion-toolbar color="light">
+      <ion-card-title>
+        <div class="flex items-center gap-2 text-warning">
+          <img src="../../../assets/icons/icon_comment.svg" class="h-10 w-10" />
+          Kommentare
+        </div>
+      </ion-card-title>
+      <ion-buttons slot="end">
+        <ion-button color="warning" size="large" (click)="close()">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <div class="mt-2 mb-4 max-h-[400px] overflow-y-auto">
+      <div class="flex flex-col gap-4">
+        <ng-container *ngFor="let comment of comments">
+          <ion-card color="primary">
+            <ion-card-content>
+              <p color="light">
+                {{ comment.message }}
+              </p>
+              <div class="w-full text-end">
+                {{ comment.created_at | date : "HH:mm, dd.MM.yy" }}
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ng-container>
+        <h2 class="text-center" *ngIf="comments.length <= 0">
+          Keine Kommentare
+        </h2>
+      </div>
+    </div>
+
+    <ion-accordion-group expand="inset">
+      <ion-accordion class="bg-light shadow-none text-tertiary">
+        <ion-item id="accordion-item" slot="header" color="warning">
+          <ion-label class="px-2">Kommentar hinzufügen</ion-label>
+        </ion-item>
+        <div slot="content" class="bg-warning">
+          <form (ngSubmit)="onSubmit()" [formGroup]="commentForm">
+            <ion-item color="dark">
+              <ion-textarea
+                formControlName="comment"
+                autoGrow
+                placeholder="dein Kommentar..."
+                class="h-[100px]"
+              ></ion-textarea>
+            </ion-item>
+            <ion-button
+              color="light"
+              class="w-full mx-0 my-2 px-4"
+              type="submit"
+            >
+              Speichern
+            </ion-button>
+          </form>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-card-content>
+</ion-card>

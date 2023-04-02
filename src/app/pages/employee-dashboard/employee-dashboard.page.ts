@@ -26,6 +26,6 @@ export class EmployeeDashboardPage implements OnInit {
   ngOnInit() { }
 
   ngOnDestroy() {
-    this.warehouseService.unsubscribeRealtimeChannel();
+    this.warehouseService.unsubscribeWarehouseChannel();
   }
 }

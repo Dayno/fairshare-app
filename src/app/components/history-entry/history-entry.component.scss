@@ -1,0 +1,25 @@
+ion-item {
+  --background: #fffdfd;
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+  height: 70px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+ion-item::part(native) {
+  width: 100%;
+  border-radius: 8px;
+}
+
+ion-item-options {
+  height: 60px;
+  padding-right: 9px;
+  padding-top: 8px;
+}
+
+ion-item-option::part(native) {
+  padding-left: 15px;
+  padding-right: 15px;
+}

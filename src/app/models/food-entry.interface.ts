@@ -21,4 +21,7 @@ export interface FoodEntry {
     food_id?: string;
     point_id?: string;
     created_at?: string;
+
+    // checkout
+    status_id?: number;
 }
