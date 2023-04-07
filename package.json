@@ -1,8 +1,7 @@
 {
-  "name": "fairshare",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "name": "fairshare-app",
+  "version": "1.1.0",
+  "author": "Danilo Ley Alves",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

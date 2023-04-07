@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 import { FoodEntry } from 'src/app/models/food-entry.interface';
 import { AuthService } from 'src/app/services/auth.service';
 import { DialogService } from 'src/app/services/dialog.service';
@@ -15,11 +16,11 @@ export class EmployeeDashboardMainPage implements OnInit {
 
   constructor(
     private warehouseService: WarehouseService,
-    private dialogService: DialogService,
+    private loadingController: LoadingController
   ) {
     this.warehouseService.listenWarehouseChannel().subscribe((data) => {
       this.getWarehouseData();
-    })
+    });
   }
 
   ngOnInit() {
@@ -32,17 +33,21 @@ export class EmployeeDashboardMainPage implements OnInit {
   }
 
   async getWarehouseData(): Promise<FoodEntry[]> {
-    await this.warehouseService.getWarehouseData()
-      .then((data) => {
-        if (data && data.length > 0) {
-          this.warehouseData = data;
-          this.warehouseData.sort((a, b) => {
-            return new Date(a.shelf_life).getTime() - new Date(b.shelf_life).getTime();
-          });
-        } else {
-          this.warehouseData = [];
-        }
-      });
+    const loading = await this.loadingController.create();
+    await loading.present();
+    await this.warehouseService.getWarehouseData().then(async (data) => {
+      await loading.dismiss();
+      if (data && data.length > 0) {
+        this.warehouseData = data;
+        this.warehouseData.sort((a, b) => {
+          return (
+            new Date(a.shelf_life).getTime() - new Date(b.shelf_life).getTime()
+          );
+        });
+      } else {
+        this.warehouseData = [];
+      }
+    });
     return this.warehouseData;
   }
 

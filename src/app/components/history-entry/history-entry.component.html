@@ -12,11 +12,6 @@
         <div>
           {{ item ? (item.created_at | date : "HH:mm, dd.MM.yyyy") : "" }}
         </div>
-        <img
-          *ngIf="item?.cool"
-          src="../../../assets/icons/icon_freeze.svg"
-          class="h-6 w-6"
-        />
       </div>
       <div class="col-span-2">
         <app-status [status_id]="item.status_id"></app-status>

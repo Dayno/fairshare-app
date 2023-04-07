@@ -1,51 +1,63 @@
 <div class="border-b-2 border-fill pt-2">
   <ion-item-sliding>
-    <ion-item lines="none" (click)="openFoodEntryInfo()">
-      <div
-        class="w-full grid grid-cols-12 text-lg text-tertiary font-medium py-3 px-[8px] justify-center items-center ion-activatable"
-      >
-        <div class="col-span-3 flex items-center gap-2">
-          <img
-            src="{{ category ? category.icon_url : '' }}"
-            class="h-10 w-10"
-          />
-          {{ item ? item.title : "" }}
-        </div>
-        <div class="col-span-3">{{ item ? item.quantity : "" }} kg</div>
-        <div class="col-span-3 flex items-center gap-2">
-          <div
-            *ngIf="item?.created_at"
-            [ngClass]="shelfLifeCheck ? 'text-danger' : 'text-tertiary'"
-          >
-            {{ item ? (item.shelf_life | date : "dd.MM.yyyy") : "" }}
-          </div>
-          <div *ngIf="!item?.created_at">
-            {{ shelfLife[item.shelf_life] }}
-          </div>
-          <img
-            *ngIf="item?.cool"
-            src="../../../assets/icons/icon_freeze.svg"
-            class="h-6 w-6"
-          />
-        </div>
-        <div class="col-span-2">{{ origin ? origin.title : "" }}</div>
-        <ng-container *ngIf="comments.length <= 0; else commentButton">
-          <div class="col-span-1 flex justify-end">
+    <ion-item lines="none">
+      <div class="w-full grid grid-cols-12">
+        <div
+          (click)="openFoodEntryInfo()"
+          class="col-span-11 grid grid-cols-11 text-lg text-tertiary font-medium py-3 px-[16px] justify-center items-center ion-activatable"
+        >
+          <div class="col-span-4 flex items-center gap-2">
             <img
-              src="../../../assets/icons/icon_options.svg"
+              src="{{ category ? category.icon_url : '' }}"
               class="h-10 w-10"
             />
+            {{ item ? item.title : "" }}
           </div>
-        </ng-container>
-        <ng-template #commentButton>
-          <div class="col-span-1 flex justify-end">
+          <div class="col-span-2">{{ item ? item.quantity : "" }} kg</div>
+          <div class="col-span-2 flex items-center gap-2">
+            <div
+              *ngIf="item?.created_at"
+              [ngClass]="shelfLifeCheck ? 'text-danger' : 'text-tertiary'"
+            >
+              {{ item ? (item.shelf_life | date : "dd.MM.yyyy") : "" }}
+            </div>
+            <div *ngIf="!item?.created_at">
+              {{ shelfLife[item.shelf_life] }}
+            </div>
+            <img
+              *ngIf="item?.cool"
+              src="../../../assets/icons/icon_freeze.svg"
+              class="h-6 w-6"
+            />
+          </div>
+          <div class="col-span-3">{{ origin ? origin.title : "" }}</div>
+          <ion-ripple-effect></ion-ripple-effect>
+        </div>
+        <div
+          (click)="openFoodEntryInfo()"
+          *ngIf="!item.created_at"
+          class="col-span-1 flex justify-center items-center"
+        >
+          <img src="../../../assets/icons/icon_options.svg" class="h-10 w-10" />
+        </div>
+        <div
+          *ngIf="item.created_at"
+          class="col-span-1 flex justify-center items-center"
+          (click)="openCommentForm()"
+        >
+          <ng-container *ngIf="comments.length <= 0; else commentButton">
             <img
               src="../../../assets/icons/icon_comment.svg"
               class="h-10 w-10 shadow-md rounded-md"
             />
-          </div>
-        </ng-template>
-        <ion-ripple-effect></ion-ripple-effect>
+          </ng-container>
+          <ng-template #commentButton>
+            <img
+              src="../../../assets/icons/icon_active-comment.svg"
+              class="h-10 w-10 shadow-md rounded-md"
+            />
+          </ng-template>
+        </div>
       </div>
     </ion-item>
     <div *ngIf="!item?.created_at">
@@ -71,14 +83,14 @@
       </ion-item-options>
     </div>
     <div *ngIf="item?.created_at">
-      <ion-item-options side="start" (ionSwipe)="openCommentForm()">
+      <ion-item-options side="start" (ionSwipe)="disposeEntry()">
         <ion-item-option
           class="rounded-l-lg text-light"
-          color="warning"
+          color="danger"
           expandable
-          (click)="openCommentForm()"
+          (click)="disposeEntry()"
         >
-          Kommentieren
+          Entsorgen
         </ion-item-option>
       </ion-item-options>
       <ion-item-options side="end" (ionSwipe)="distributeEntry()">

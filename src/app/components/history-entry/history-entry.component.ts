@@ -17,21 +17,29 @@ export class HistoryEntryComponent implements OnInit {
   constructor(
     private dialogService: DialogService,
     private dataService: DataService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.checkData();
+    console.log(this.item);
   }
 
   async checkData(): Promise<void> {
-    // get catregory and origin 
-    this.category = await this.dataService.getCategorysById(this.item.category_id);
-    this.origin = await this.dataService.getOriginsById(this.item.origin_category_id);
+    // get catregory and origin
+    this.category = await this.dataService.getCategorysById(
+      this.item.category_id
+    );
+    this.origin = await this.dataService.getOriginsById(
+      this.item.origin_category_id
+    );
   }
 
   // modal functionality --
   async openFoodEntryInfo(): Promise<void> {
-    this.dialogService.presentFoodEntryInfoModal(this.item, this.category, this.origin);
+    this.dialogService.presentFoodEntryInfoModal(
+      this.item,
+      this.category,
+      this.origin
+    );
   }
-
 }

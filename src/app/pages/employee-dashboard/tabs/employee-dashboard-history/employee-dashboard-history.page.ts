@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 import { HistoryEntry } from 'src/app/models/history-entry.interface';
 import { DialogService } from 'src/app/services/dialog.service';
 import { WarehouseService } from 'src/app/services/warehouse.service';
@@ -13,11 +14,11 @@ export class EmployeeDashboardHistoryPage implements OnInit {
 
   constructor(
     private warehouseService: WarehouseService,
-    private dialogService: DialogService,
+    private loadingController: LoadingController
   ) {
     this.warehouseService.listenCheckoutChannel().subscribe((data) => {
       this.getHistoryData();
-    })
+    });
   }
 
   ngOnInit() {
@@ -30,17 +31,21 @@ export class EmployeeDashboardHistoryPage implements OnInit {
   }
 
   async getHistoryData(): Promise<HistoryEntry[]> {
-    await this.warehouseService.getCechkoutData()
-      .then((data) => {
-        if (data && data.length > 0) {
-          this.historyData = data;
-          this.historyData.sort((a, b) => {
-            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-          });
-        } else {
-          this.historyData = [];
-        }
-      });
+    const loading = await this.loadingController.create();
+    await loading.present();
+    await this.warehouseService.getCechkoutData().then(async (data) => {
+      await loading.dismiss();
+      if (data && data.length > 0) {
+        this.historyData = data;
+        this.historyData.sort((a, b) => {
+          return (
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
+        });
+      } else {
+        this.historyData = [];
+      }
+    });
     return this.historyData;
   }
 

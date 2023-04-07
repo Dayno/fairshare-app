@@ -32,7 +32,7 @@ export class FoodEntryComponent implements OnInit {
     private warehouseService: WarehouseService,
     private loadingController: LoadingController,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.checkData();
@@ -40,14 +40,20 @@ export class FoodEntryComponent implements OnInit {
       this.loadComments();
       this.warehouseService.listenCommentsChannel().subscribe((data) => {
         this.loadComments();
-      })
+      });
     }
   }
 
+  test(): void {}
+
   async checkData(): Promise<void> {
-    // get catregory and origin 
-    this.category = await this.dataService.getCategorysById(this.item.category_id);
-    this.origin = await this.dataService.getOriginsById(this.item.origin_category_id);
+    // get catregory and origin
+    this.category = await this.dataService.getCategorysById(
+      this.item.category_id
+    );
+    this.origin = await this.dataService.getOriginsById(
+      this.item.origin_category_id
+    );
 
     const shelfLife = new Date(this.item.shelf_life);
     const currentDate = new Date();
@@ -57,18 +63,23 @@ export class FoodEntryComponent implements OnInit {
   }
 
   loadComments(): void {
-    this.warehouseService.getComments(this.item?.id)
+    this.warehouseService
+      .getComments(this.item?.id)
       .then((data) => {
-        this.comments = data
+        this.comments = data;
       })
       .catch((error) => {
-        this.dialogService.showAlert('Ein Fehler ist aufgetreten', error)
-      })
+        this.dialogService.showAlert('Ein Fehler ist aufgetreten', error);
+      });
   }
 
   // modal functionality --
   async openFoodEntryInfo(): Promise<void> {
-    this.dialogService.presentFoodEntryInfoModal(this.item, this.category, this.origin);
+    this.dialogService.presentFoodEntryInfoModal(
+      this.item,
+      this.category,
+      this.origin
+    );
   }
 
   async openCommentForm(): Promise<void> {
@@ -89,16 +100,24 @@ export class FoodEntryComponent implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
     try {
-      await this.warehouseService.checkoutData(this.item, 1, this.item.quantity).then(async (result) => {
-        await loading.dismiss()
-        if (!result.message) {
-          this.dialogService.presentToast('Checkout erfolgreich');
-        } else {
-          this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + result.error);
-        }
-      })
+      await this.warehouseService
+        .checkoutData(this.item, 1, this.item.quantity)
+        .then(async (result) => {
+          await loading.dismiss();
+          if (!result.message) {
+            this.dialogService.presentToast('Checkout erfolgreich');
+          } else {
+            this.dialogService.showAlert(
+              'Fehler',
+              'Es ist ein Fehler aufgetreten. Details: ' + result.error
+            );
+          }
+        });
     } catch (error) {
-      this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + error);
+      this.dialogService.showAlert(
+        'Fehler',
+        'Es ist ein Fehler aufgetreten. Details: ' + error
+      );
     }
   }
 
@@ -106,16 +125,24 @@ export class FoodEntryComponent implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
     try {
-      await this.warehouseService.checkoutData(this.item, 2, this.item.quantity).then(async (result) => {
-        await loading.dismiss()
-        if (!result.message) {
-          this.dialogService.presentToast('Checkout erfolgreich');
-        } else {
-          this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + result.error);
-        }
-      })
+      await this.warehouseService
+        .checkoutData(this.item, 2, this.item.quantity)
+        .then(async (result) => {
+          await loading.dismiss();
+          if (!result.message) {
+            this.dialogService.presentToast('Checkout erfolgreich');
+          } else {
+            this.dialogService.showAlert(
+              'Fehler',
+              'Es ist ein Fehler aufgetreten. Details: ' + result.error
+            );
+          }
+        });
     } catch (error) {
-      this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten. Details: ' + error);
+      this.dialogService.showAlert(
+        'Fehler',
+        'Es ist ein Fehler aufgetreten. Details: ' + error
+      );
     }
   }
 }

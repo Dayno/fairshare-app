@@ -33,7 +33,7 @@
               {{ item ? (item.shelf_life | date : "dd.MM.yyyy") : "" }}
             </div>
             <div *ngIf="!item?.created_at">
-              {{ item ? item.shelf_life : "" }}
+              {{ item ? (item.shelf_life | date : "dd.MM.yyyy") : "" }}
             </div>
           </div>
           <div class="col-span-3 text-medium font-base">Gerettet von:</div>
@@ -83,7 +83,7 @@
 
     <!-- Foodsaver form -->
     <div
-      class="w-full grid grid-cols-8 gap-2 px-4 mt-2 text-tertiary"
+      class="w-full grid grid-cols-8 gap-3 px-4 mt-2 text-tertiary"
       slot="content"
       *ngIf="!item?.first_name"
     >
@@ -93,7 +93,12 @@
       <div class="col-span-5">{{ item.quantity }} kg</div>
       <div class="col-span-3 text-medium font-base">Genießbar bis:</div>
       <div class="col-span-5">
-        {{ shelfLife[item.shelf_life] | date : "dd.MM.yyyy" }}
+        <div *ngIf="item?.created_at">
+          {{ item ? (item.shelf_life | date : "dd.MM.yyyy") : "" }}
+        </div>
+        <div *ngIf="!item?.created_at">
+          {{ shelfLife[item.shelf_life] | date : "dd.MM.yyyy" }}
+        </div>
       </div>
       <div class="col-span-3 text-medium font-base">Gerettet von:</div>
       <div class="col-span-5">{{ origin.title }}</div>
