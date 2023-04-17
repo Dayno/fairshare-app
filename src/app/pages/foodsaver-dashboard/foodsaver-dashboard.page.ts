@@ -19,13 +19,17 @@ export class FoodsaverDashboardPage implements OnInit {
     private formService: FormService,
     private router: Router,
     private loadingController: LoadingController,
-    private dialogService: DialogService,
+    private dialogService: DialogService
   ) {
     this.authService.getCurrentUser().subscribe((user) => {
       if (user) {
         this.authService.getUserData().then((data) => {
-          this.dialogService.presentToast('Hallo ' + data?.['data']?.first_name + '! Wir freuen uns, dass Du dabei bist!');
-        })
+          this.dialogService.presentToast(
+            'Hallo ' +
+              data?.['data']?.first_name +
+              '! Wir freuen uns, dass Du dabei bist!'
+          );
+        });
       }
     });
   }
@@ -40,12 +44,14 @@ export class FoodsaverDashboardPage implements OnInit {
       if (items) {
         this.deliveryItems = items;
       }
-    })
+    });
   }
 
   // form actions -----
   async cancelDelivery(): Promise<void> {
-    const result = await this.dialogService.confirm('Bist du sicher, dass du deine Lieferung abbrechen möchtest?');
+    const result = await this.dialogService.confirm(
+      'Bist du sicher, dass du deine Lieferung abbrechen möchtest?'
+    );
     if (result) {
       await this.authService.signOutUser().then(() => {
         this.formService.clearDeliveries();
@@ -60,7 +66,7 @@ export class FoodsaverDashboardPage implements OnInit {
     try {
       const data = await this.formService.submitDelivery();
       if (data[0].message) {
-        this.dialogService.showAlert('Fehler', 'Deine Einträge konnten nicht versendet werden. Details: ' + data[0].message);
+        this.dialogService.showAlert('Fehler', data[0].message);
       } else {
         this.router.navigateByUrl('/point/foodsaver/dashboard/success');
       }

@@ -28,7 +28,14 @@ export class FoodsaverFormPage implements OnInit {
   formData = this.fb.nonNullable.group({
     id: [uuidv4()],
     title: ['', Validators.required],
-    quantity: [0, [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/), Validators.min(0.1)]],
+    quantity: [
+      0,
+      [
+        Validators.required,
+        Validators.pattern(/^\d+(\.\d{1,2})?$/),
+        Validators.min(0.1),
+      ],
+    ],
     category_id: [-1, [Validators.required, Validators.min(0)]],
     shelf_life: [-1, [Validators.required, Validators.min(0)]],
     origin_category_id: [-1, [Validators.required, Validators.min(0)]],
@@ -44,8 +51,8 @@ export class FoodsaverFormPage implements OnInit {
     private fb: FormBuilder,
     private dataService: DataService,
     private formService: FormService,
-    private dialogService: DialogService,
-  ) { }
+    private dialogService: DialogService
+  ) {}
 
   ngOnInit() {
     if (
@@ -59,8 +66,8 @@ export class FoodsaverFormPage implements OnInit {
     this.getCategpoys();
     this.getOrigins();
     // range logic
-    const input = <HTMLInputElement>document.getElementById("input");
-    input.addEventListener("input", () => {
+    const input = <HTMLInputElement>document.getElementById('input');
+    input.addEventListener('input', () => {
       this.updateStepColors();
     });
     this.updateStepColors();
@@ -104,7 +111,7 @@ export class FoodsaverFormPage implements OnInit {
     return this.formData.get('comment');
   }
 
-  // get data 
+  // get data
   getCategpoys(): void {
     this.dataService.getCategorys().then((data) => {
       this.categorys = data;
@@ -119,7 +126,7 @@ export class FoodsaverFormPage implements OnInit {
   // handle form data ----
 
   private setFormValues(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const item = JSON.parse(params['item']);
       this.formData.patchValue({
         id: item.id,
@@ -146,8 +153,12 @@ export class FoodsaverFormPage implements OnInit {
     ) {
       this.formService.addDeliveryItem(this.formData.getRawValue());
       this.router.navigate(['point/foodsaver/dashboard']);
+      this.formData.reset();
     } else {
-      this.dialogService.showAlert('Fehler', 'Bitte fülle alle notwendigen Felder aus: Lebensmittelname, Menge, Kategorie, Haltbarkeit');
+      this.dialogService.showAlert(
+        'Fehler',
+        'Bitte fülle alle notwendigen Felder aus: Lebensmittelname, Menge, Kategorie, Haltbarkeit'
+      );
     }
   }
 
@@ -157,7 +168,9 @@ export class FoodsaverFormPage implements OnInit {
   }
 
   async cancelSubmission(): Promise<void> {
-    const result = await this.dialogService.confirm('Bist du sicher, dass du zurück zur Übersicht möchtest?');
+    const result = await this.dialogService.confirm(
+      'Bist du sicher, dass du zurück zur Übersicht möchtest?'
+    );
     if (result) {
       this.router.navigate(['point/foodsaver/dashboard']);
     }
@@ -165,10 +178,12 @@ export class FoodsaverFormPage implements OnInit {
 
   // input range functionality --
   stepColor(id: number): string {
-    if (id == parseInt((<HTMLInputElement>document.getElementById("input")).value)) {
-      return "#99BB44";
+    if (
+      id == parseInt((<HTMLInputElement>document.getElementById('input')).value)
+    ) {
+      return '#99BB44';
     } else {
-      return "#BEBEB9";
+      return '#BEBEB9';
     }
   }
 
@@ -185,4 +200,3 @@ export class FoodsaverFormPage implements OnInit {
     this.emittedRangeValue = (event as RangeCustomEvent).detail.value;
   }
 }
-

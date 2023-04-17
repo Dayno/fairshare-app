@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { FoodEntry } from 'src/app/models/food-entry.interface';
-import { AuthService } from 'src/app/services/auth.service';
-import { DialogService } from 'src/app/services/dialog.service';
 import { WarehouseService } from 'src/app/services/warehouse.service';
 
 @Component({

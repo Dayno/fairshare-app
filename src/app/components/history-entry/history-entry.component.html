@@ -1,13 +1,13 @@
-<div class="border-b-2 border-fill pt-2">
+<div class="border-b-2 border-fill pt-1">
   <ion-item lines="none" (click)="openFoodEntryInfo()">
     <div
       class="w-full grid grid-cols-12 text-lg text-tertiary font-medium py-3 px-[8px] justify-center items-center ion-activatable"
     >
-      <div class="col-span-3 flex items-center gap-2">
+      <div class="col-span-4 flex items-center gap-2">
         <img src="{{ category ? category.icon_url : '' }}" class="h-10 w-10" />
         {{ item ? item.title : "" }}
       </div>
-      <div class="col-span-3">{{ item ? item.quantity : "" }} kg</div>
+      <div class="col-span-2">{{ item ? item.quantity : "" }} kg</div>
       <div class="col-span-3 flex items-center gap-2">
         <div>
           {{ item ? (item.created_at | date : "HH:mm, dd.MM.yyyy") : "" }}

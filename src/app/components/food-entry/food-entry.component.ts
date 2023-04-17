@@ -44,8 +44,6 @@ export class FoodEntryComponent implements OnInit {
     }
   }
 
-  test(): void {}
-
   async checkData(): Promise<void> {
     // get catregory and origin
     this.category = await this.dataService.getCategorysById(
