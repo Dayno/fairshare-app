@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Status } from 'src/app/models/status.interface';
 
 @Component({
   selector: 'app-status',
@@ -13,9 +14,9 @@ export class StatusComponent implements OnInit {
 
   ngOnInit() {
     if (this.status_id === 1) {
-      this.status = "Fairteilt"
+      this.status = Status.FAIRTEILT
     } else {
-      this.status = "Entsorgt"
+      this.status = Status.ENTSORGT
     }
   }
 }

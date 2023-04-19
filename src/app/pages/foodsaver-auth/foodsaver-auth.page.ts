@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -9,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class FoodsaverAuthPage implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService) {
     this.authService.empSignOut();
   }
 

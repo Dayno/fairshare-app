@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { WarehouseService } from 'src/app/services/warehouse.service';
@@ -26,7 +26,6 @@ export class CommentFormComponent implements OnInit {
   get title() {
     return this.commentForm.get('title');
   }
-
 
   constructor(
     private modalController: ModalController,

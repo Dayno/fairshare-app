@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-
 import { HeaderComponent } from '../components/header/header.component';
 import { FoodEntryComponent } from '../components/food-entry/food-entry.component';
 import { FsFormItemComponent } from '../components/fs-form-item/fs-form-item.component';

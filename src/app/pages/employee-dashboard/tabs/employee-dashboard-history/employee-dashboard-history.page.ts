@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { HistoryEntry } from 'src/app/models/history-entry.interface';
-import { DialogService } from 'src/app/services/dialog.service';
 import { WarehouseService } from 'src/app/services/warehouse.service';
 
 @Component({

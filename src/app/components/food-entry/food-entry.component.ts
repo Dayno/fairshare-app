@@ -4,6 +4,7 @@ import { LoadingController } from '@ionic/angular';
 import { Comment } from 'src/app/modals/comment-form/comment-form.component';
 import { FoodEntry } from 'src/app/models/food-entry.interface';
 import { ShelfLifeString } from 'src/app/models/shelf-life';
+import { AktionsStatus } from 'src/app/models/status.interface';
 import { DataService, FormItem } from 'src/app/services/data.service';
 import { DialogService } from 'src/app/services/dialog.service';
 import { FormService } from 'src/app/services/form.service';
@@ -32,7 +33,7 @@ export class FoodEntryComponent implements OnInit {
     private warehouseService: WarehouseService,
     private loadingController: LoadingController,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.checkData();
@@ -99,7 +100,7 @@ export class FoodEntryComponent implements OnInit {
     await loading.present();
     try {
       await this.warehouseService
-        .checkoutData(this.item, 1, this.item.quantity)
+        .checkoutData(this.item, AktionsStatus.FAIRTEILEN, this.item.quantity)
         .then(async (result) => {
           await loading.dismiss();
           if (!result.message) {
@@ -124,7 +125,7 @@ export class FoodEntryComponent implements OnInit {
     await loading.present();
     try {
       await this.warehouseService
-        .checkoutData(this.item, 2, this.item.quantity)
+        .checkoutData(this.item, AktionsStatus.ENTSORGEN, this.item.quantity)
         .then(async (result) => {
           await loading.dismiss();
           if (!result.message) {

@@ -6,7 +6,6 @@ import { WarehouseDataConverter } from '../converters/warehouseData.converter';
 import { FoodEntry } from '../models/food-entry.interface';
 import { AuthService } from './auth.service';
 import { DialogService } from './dialog.service';
-import { HistoryEntry } from '../models/history-entry.interface';
 
 @Injectable({
   providedIn: 'root'
