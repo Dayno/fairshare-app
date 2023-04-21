@@ -162,6 +162,7 @@ export class AuthService {
   public async registerUser(credentials: Foodsaver): Promise<GenericObject> {
     return await this.supabase.auth.signUp(credentials)
       .then(async (result) => {
+        console.log(result)
         if (result.data.user) {
           await this.supabase.from('foodsaver').update({
             first_name: credentials.first_name,

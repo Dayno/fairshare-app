@@ -13,7 +13,7 @@ export class FsAuthRegisterPage implements OnInit {
   registerCredentials = this.fb.nonNullable.group({
     first_name: ['', [Validators.required, Validators.minLength(2)]],
     last_name: ['', [Validators.required, Validators.minLength(2)]],
-    email: ['', Validators.required, Validators.email],
+    email: ['', [Validators.required, Validators.email]],
     privacyCheck: [false, Validators.requiredTrue],
     tel: [],
     foodsharing_id: [],
