@@ -12,7 +12,6 @@ import { Point } from '../models/point.interface';
 export class AuthService {
   private supabase: SupabaseClient;
   private currentPoint: BehaviorSubject<any> = new BehaviorSubject(null);
-  private currentEmp: BehaviorSubject<any> = new BehaviorSubject(null);
   private currentUser: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor() {
@@ -27,7 +26,6 @@ export class AuthService {
         this.currentUser.next(false);
       }
     });
-    this.loadEmp();
     this.loadPoint();
     this.loadUser();
   }
@@ -45,17 +43,6 @@ export class AuthService {
       this.currentPoint.next(false);
     }
   }
-  private loadEmp(): void {
-    if (this.currentEmp.value) {
-      return;
-    }
-    const empId = localStorage.getItem('empId');
-    if (empId) {
-      this.currentEmp.next(empId);
-    } else {
-      this.currentEmp.next(false);
-    }
-  }
   private async loadUser(): Promise<void> {
     if (this.currentUser.value) {
       return;
@@ -68,31 +55,18 @@ export class AuthService {
     }
   }
 
-  // EMPLOYEE AUTH 
+  // ----- POINT AUTH -----
 
-  public getCurrentEmp(): Observable<Point> {
-    return this.currentEmp.asObservable();
-  }
-
-  public async empSignIn(empId: string): Promise<boolean> {
-    const result = await this.supabase.from('points').select().eq('point_id', empId)
-    if (result.data && result.data.length > 0) {
-      this.currentEmp.next(empId);
-      localStorage.setItem('empId', empId);
-      return true
+  public async getCurrentPoint(): Promise<GenericObject | null> {
+    const result = await this.supabase.from('points').select().eq('point_id', this.currentPoint.value).single();
+    if (result.data) {
+      return result.data;
     } else {
-      return false
+      return null;
     }
   }
 
-  empSignOut(): void {
-    localStorage.removeItem('empId');
-    this.currentEmp.next(false);
-  }
-
-  // ----- POINT AUTH -----
-
-  public getCurrentPoint(): Observable<Point> {
+  public getLocalPointId(): Observable<Point> {
     return this.currentPoint.asObservable();
   }
 
@@ -103,6 +77,16 @@ export class AuthService {
     } else {
       return '';
     }
+  }
+
+  public async isCurrentPointOwner(): Promise<boolean> {
+    return this.getCurrentPoint().then((point) => {
+      if (point?.['user_id'] === this.getCurrentUserId()) {
+        return true;
+      }
+      return false;
+    });
+
   }
 
   public async pointSignIn(pointId: string): Promise<boolean> {
@@ -155,6 +139,7 @@ export class AuthService {
     return await this.supabase.auth.signInWithPassword(credentials);
   }
   public async signOutUser(): Promise<GenericObject> {
+    this.currentUser.next(false);
     return await this.supabase.auth.signOut();
   }
 
@@ -162,7 +147,6 @@ export class AuthService {
   public async registerUser(credentials: Foodsaver): Promise<GenericObject> {
     return await this.supabase.auth.signUp(credentials)
       .then(async (result) => {
-        console.log(result)
         if (result.data.user) {
           await this.supabase.from('foodsaver').update({
             first_name: credentials.first_name,

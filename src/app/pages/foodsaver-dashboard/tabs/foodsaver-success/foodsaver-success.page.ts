@@ -11,15 +11,18 @@ export class FoodsaverSuccessPage implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
   }
 
   async finish(): Promise<void> {
-    await this.authService.signOutUser();
-    this.router.navigate(['/point/foodsaver']);
+    if (!(await this.authService.isCurrentPointOwner()).valueOf()) {
+      await this.authService.signOutUser();
+      this.router.navigate(['/point/foodsaver']);
+    } else {
+      this.router.navigate(['/point/dashboard']);
+    }
   }
-
 }

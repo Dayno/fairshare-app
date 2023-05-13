@@ -15,11 +15,22 @@
     <form (ngSubmit)="pointSwitch()" [formGroup]="formData">
       <div class="flex flex-col items-center gap-4 mt-2">
         <input
-          formControlName="pointId"
+          formControlName="email"
+          type="email"
+          class="w-full text-tertiary bg-fill rounded-md border-0 focus:outline-none focus:ring-2 text-center"
+          [ngClass]="
+            (email?.dirty || email?.touched) && email?.invalid
+              ? 'ring-2 ring-danger focus:ring-danger'
+              : 'ring-0 focus:ring-secondary'
+          "
+          placeholder="Point Mail"
+        />
+        <input
+          formControlName="password"
           type="password"
           class="w-full text-tertiary bg-fill rounded-md border-0 focus:outline-none focus:ring-2 text-center"
           [ngClass]="
-            (pointId?.dirty || pointId?.touched) && pointId?.invalid
+            (password?.dirty || password?.touched) && password?.invalid
               ? 'ring-2 ring-danger focus:ring-danger'
               : 'ring-0 focus:ring-secondary'
           "
@@ -30,6 +41,7 @@
           type="submit"
           class="w-1/2"
           color="secondary"
+          (keyup.enter)="pointSwitch()"
         >
           <ion-icon
             slot="start"

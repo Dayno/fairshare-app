@@ -19,15 +19,15 @@ export class FoodsaverDashboardPage implements OnInit {
     private formService: FormService,
     private router: Router,
     private loadingController: LoadingController,
-    private dialogService: DialogService
+    private dialogService: DialogService,
   ) {
-    this.authService.getCurrentUser().subscribe((user) => {
-      if (user) {
+    this.authService.getCurrentUser().subscribe(async (user) => {
+      if (user && !(await this.authService.isCurrentPointOwner()).valueOf()) {
         this.authService.getUserData().then((data) => {
           this.dialogService.presentToast(
             'Hallo ' +
-              data?.['data']?.first_name +
-              '! Wir freuen uns, dass Du dabei bist!'
+            data?.['data']?.first_name +
+            '! Wir freuen uns, dass Du dabei bist!'
           );
         });
       }
@@ -52,11 +52,13 @@ export class FoodsaverDashboardPage implements OnInit {
     const result = await this.dialogService.confirm(
       'Bist du sicher, dass du deine Lieferung abbrechen möchtest?'
     );
-    if (result) {
+    if (result && !(await this.authService.isCurrentPointOwner()).valueOf()) {
       await this.authService.signOutUser().then(() => {
         this.formService.clearDeliveries();
         this.router.navigateByUrl('point/foodsaver');
       });
+    } else {
+      this.router.navigateByUrl('point/dashboard');
     }
   }
 

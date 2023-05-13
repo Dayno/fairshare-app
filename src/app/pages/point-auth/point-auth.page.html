@@ -13,7 +13,7 @@
     <h1 class="font-londrina text-6xl font-medium text-light z-10">
       FAIRSHARE POINT
     </h1>
-    <ion-card class="bg-light p-2 w-1/2">
+    <ion-card class="bg-light p-2 w-1/3">
       <ion-card-content>
         <form [formGroup]="credentials">
           <div class="flex flex-col gap-2">
@@ -32,24 +32,14 @@
               class="text-danger text-xs"
               >Point ID ungültig</span
             >
-            <div class="flex sm:flex-row flex-col">
-              <ion-button
-                color="secondary"
-                [disabled]="credentials.invalid"
-                (click)="flogin()"
-                class="sm:w-1/2"
-              >
-                Foodsaver:innen Login
-              </ion-button>
-              <ion-button
-                color="secondary"f
-                [disabled]="credentials.invalid"
-                (click)="mlogin()"
-                class="sm:w-1/2"
-              >
-                Mitarbeiter:innen Übersicht
-              </ion-button>
-            </div>
+            <ion-button
+              color="secondary"
+              [disabled]="credentials.invalid"
+              (click)="unlockTab()"
+              class="w-1/2 mx-auto"
+            >
+              Tablet freischalten
+            </ion-button>
           </div>
         </form>
       </ion-card-content>

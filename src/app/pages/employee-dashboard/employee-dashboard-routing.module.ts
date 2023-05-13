@@ -20,7 +20,12 @@ const routes: Routes = [
       {
         path: 'history',
         loadChildren: () => import('./tabs/employee-dashboard-history/employee-dashboard-history.module').then(m => m.EmployeeDashboardHistoryPageModule)
-      }
+      },
+      {
+        path: 'delivery',
+        loadChildren: () => import('../foodsaver-dashboard/foodsaver-dashboard.module').then(m => m.FoodsaverDashboardPageModule)
+      },
+
     ]
   },
 ];

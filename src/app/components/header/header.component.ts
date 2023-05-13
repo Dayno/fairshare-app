@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
       .then(async (result) => {
         if (result) {
           try {
-            this.authService.pointSignOut();
+            this.authService.signOutUser();
           } catch (error) {
             this.dialogService.showAlert('Fehler', 'Es ist ein Fehler aufgetreten.');
           }

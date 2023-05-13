@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -8,8 +9,13 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class FoodsaverAuthPage implements OnInit {
 
-  constructor(private authService: AuthService) {
-    this.authService.empSignOut();
+  constructor(private authService: AuthService, private router: Router) {
+    this.authService.isCurrentPointOwner().then((isOwner) => {
+      if (!isOwner) {
+        return;
+      }
+      this.router.navigate(['/point/dashboard']);
+    });
   }
 
   ngOnInit() {

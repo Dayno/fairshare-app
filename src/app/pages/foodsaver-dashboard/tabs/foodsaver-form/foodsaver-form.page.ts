@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController } from '@ionic/angular';
 import { RangeCustomEvent, RangeValue } from '@ionic/core';
 import { FormItem, DataService } from 'src/app/services/data.service';
 import { DialogService } from 'src/app/services/dialog.service';
@@ -52,7 +51,7 @@ export class FoodsaverFormPage implements OnInit {
     private dataService: DataService,
     private formService: FormService,
     private dialogService: DialogService
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (

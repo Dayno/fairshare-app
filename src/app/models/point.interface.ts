@@ -1,4 +1,5 @@
 export interface Point {
-    name: string;
+    title: string;
     point_id: string;
+    user_id: string;
 }

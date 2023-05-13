@@ -11,13 +11,13 @@ import { WarehouseService } from 'src/app/services/warehouse.service';
 export class EmployeeDashboardPage implements OnInit {
 
   constructor(private authService: AuthService, private router: Router, private warehouseService: WarehouseService) {
-    this.authService.getCurrentPoint().subscribe((point) => {
+    this.authService.getLocalPointId().subscribe((point) => {
       if (!point) {
         this.router.navigateByUrl('/point');
       }
     });
-    this.authService.getCurrentEmp().subscribe((emp) => {
-      if (!emp) {
+    this.authService.getCurrentUser().subscribe((user) => {
+      if (!user) {
         this.router.navigateByUrl('point/foodsaver');
       }
     });

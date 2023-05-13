@@ -22,8 +22,7 @@ export class PointAuthPage implements OnInit {
     private dialogService: DialogService,
     private router: Router,
   ) {
-    this.authService.empSignOut();
-    this.authService.getCurrentPoint().subscribe((point) => {
+    this.authService.getLocalPointId().subscribe((point) => {
       if (point) {
         this.router.navigateByUrl('/point/foodsaver/auth', { replaceUrl: true });
       }
@@ -36,7 +35,7 @@ export class PointAuthPage implements OnInit {
 
   ngOnInit() { }
 
-  async flogin(): Promise<void> {
+  async unlockTab(): Promise<void> {
     const loading = await this.loadingController.create();
     await loading.present();
 
@@ -50,22 +49,5 @@ export class PointAuthPage implements OnInit {
           this.dialogService.showAlert('Login Fehlgeschlagen', 'Point ID nicht gefunden');
         }
       });
-  }
-
-  async mlogin(): Promise<void> {
-    const loading = await this.loadingController.create();
-    await loading.present();
-
-    this.authService
-      .pointSignIn(this.credentials.getRawValue().pointId)
-      .then(async (result) => {
-        await this.authService.empSignIn(this.credentials.getRawValue().pointId)
-        await loading.dismiss();
-        if (result === true) {
-          this.router.navigateByUrl('/point/dashboard');
-        } else {
-          this.dialogService.showAlert('Login Fehlgeschlagen', 'Point ID nicht gefunden');
-        }
-      })
   }
 }
